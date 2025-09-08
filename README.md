@@ -1,12 +1,8 @@
 # Wawi Stock Management Server
 
-## Deployment
-
-- **Live Link**: [Live server link]()
-
 ## Postman API Documentation:
 
-- **[Postman API Documentation]()**
+- **[Postman API Documentation](https://documenter.getpostman.com/view/20678245/2sB3HnJK4B)**
 
 ## Technologies Used
 
@@ -16,117 +12,129 @@
 - PostgreSQL
 - Zod
 
+---
+
 ## Getting Started
 
 To get a local copy of the project up and running, follow these steps:
 
 1. **Clone the Repository:**
 
-```shell
-git clone <repository-link>
-```
+   ```bash
+   git clone <repository-link>
+   ```
 
 2. **Navigate to the Project Directory:**
 
-```shell
-cd <project_name>
-```
+   ```bash
+   cd <project_name>
+   ```
 
-3. Please update the filename from `.env.example` to `.env` and Fill your own data
+3. **Configure Environment Variables:**
+   - Copy `.env.example` to `.env`
+   - Update the values:
+     - `DATABASE_URL`: Your PostgreSQL connection string
+     - `PORT`: Server port (default: 5000)
 
 4. **Install Dependencies:**
 
-```shell
-pnpm i
-```
+   ```bash
+   pnpm install
+   # or
+   yarn install
+   # or
+   npm install
+   ```
 
-or
+5. **Generate Prisma Client:**
 
-```shell
-yarn
-```
+   ```bash
+   npx prisma generate
+   ```
 
-or
+6. **Run Migrations:**
 
-```shell
-npm i
-```
-
-5. **Generate Prisma:**
-
-```shell
-npx prisma generate
-```
-
-6. **Generate migration:**
-
-```shell
-npx prisma migrate
-
-```
+   ```bash
+   npx prisma migrate dev
+   ```
 
 7. **Start the Server:**
 
-```shell
-pnpm dev
-```
+   ```bash
+   pnpm dev
+   # or
+   yarn dev
+   # or
+   npm run dev
+   ```
 
-or
+Server will be running at **`http://localhost:5000`**.
 
-```shell
-yarn dev
-```
+---
 
-or
+## API Endpoints
 
-```shell
-npm run dev
-```
+### 🔹 Stock APIs
 
-The server will be running at **`http://localhost:5000`** .
+- `POST /stock/in` → Add stock to a warehouse
+- `POST /stock/out` → Remove stock (prevents negatives)
+- `POST /stock/transfer` → Transfer stock between warehouses
+- `GET /stock/summary` → Stock totals per warehouse and overall
 
-## Setup Steps
+### 🔹 Product APIs
 
-### Prerequisites
+- `POST /products` → Create a product
+- `GET /products` → List all products
+- `GET /products/id` → Get Product by id
+- `PATCH /products/id` → Update product by id
+- `DELETE /products/id` → Delete product by id
 
-- Node.js (v18 or higher)
-- PostgreSQL database
-- Git
+### 🔹 Warehouse APIs
 
-### Environment Configuration
+- `POST /warehouses` → Create a warehouse
+- `GET /warehouses` → List all warehouses
+- `GET /warehouses/id` → Get warehouse by id
+- `PATCH /warehouses/id` → Update warehouse by id
+- `DELETE /warehouses/id` → Delete warehouse by id
 
-1. Copy `.env.example` to `.env`
-2. Configure the following environment variables:
-   - `DATABASE_URL`: Your PostgreSQL connection string
-   - `JWT_SECRET`: Secret key for JWT token generation
-   - `PORT`: Server port (default: 5000)
-
-### Database Setup
-
-1. Ensure PostgreSQL is running
-2. Run `npx prisma generate` to generate Prisma client
-3. Run `npx prisma migrate` to sync database schema
+---
 
 ## Approach
 
-This wawi stock management server follows a **RESTful API architecture** with the following key design decisions:
+This WaWi stock management server follows a **RESTful API architecture** with the following design principles:
 
-- **TypeScript**: For type safety and better development experience
-- **Prisma ORM**: For database operations with auto-generated types
-- **JWT Authentication**: Secure user authentication and authorization
-- **Zod Validation**: Runtime type validation for request/response data
-- **Modular Structure**: Separated routes, controllers, and services for maintainability
-- **Error Handling**: Centralized error handling with appropriate HTTP status codes
-- **Input Validation**: Comprehensive validation using Zod schemas
+- **Transaction-safe stock operations**: Prevents negative stock using transactions and locks
+- **Idempotency**: Ensured with a unique `operationKey` for each stock operation
+- **Immutable ledger**: Stock changes are always recorded in a ledger (never updated in place)
+- **Summary view**: Provides stock totals per warehouse and overall
+- **TypeScript + Prisma**: For strong typing and database abstraction
+- **Zod validation**: Runtime validation for request/response data
+- **Modular structure**: Clear separation of controllers, services, and routes
+- **Error handling**: Centralized error responses with proper HTTP status codes
+
+---
+
+## Setup Requirements
+
+- Node.js (v18 or higher)
+- PostgreSQL
+- Git
+
+---
 
 ## Contributing
 
-Contributions are welcome! If you find any bugs or want to suggest improvements, please open an issue or create a pull request.
+Contributions are welcome!
+If you find any bugs or want to suggest improvements, please open an issue or create a pull request.
+
+---
 
 ## License
 
 Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
+---
+
 ## More Projects and Information
 
-👉 Explore additional projects and find out more about my work on my portfolio website: [Md Mobassher Hossain](https://mobassher.vercel.app)
+👉 Explore more projects and my portfolio: [Md Mobassher Hossain](https://mobassher.vercel.app)
