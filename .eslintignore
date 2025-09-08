@@ -1,0 +1,23 @@
+# Build outputs
+dist/
+build/
+out/
+
+# Dependencies
+node_modules/
+
+# Tools and scripts
+tools/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+
+# Coverage reports
+coverage/
+
+# Prisma generated files
+prisma/migrations/ 
